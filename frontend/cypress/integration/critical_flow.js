@@ -1,5 +1,5 @@
 describe('Navigation', function () {
-    it('should navigate as an anonymous user', function () {
+    it('should navigate through all the pages', function () {
         cy.log('Visit homepage')
         cy.visit('/')
         cy.title().should('eq', 'Conduit')
@@ -10,39 +10,20 @@ describe('Navigation', function () {
         cy.get('.author').first().click()
         cy.url().should('contain', '@')
         cy.get('.user-info').should('exist')
+        cy.get('h4').should('not.be.empty')
 
         cy.log('Visit article page')
         cy.visit('/')
         cy.get('.preview-link > h1').eq(2).click()
-    })
-    it('should navigate as an authenticated user', function () {
+        cy.url().should('contain', 'article')
+        cy.get('.banner').should('exist')
+        cy.get('.article-content').should('exist')
+
         cy.log('Logging in')
         cy.visit('/login')
         cy.get('input[type=email]').type('cypress@devoxx.fr')
-        cy.get('input[type=password]').type('cypressdevoxx')
-        cy.get('button[type="submit"]').click()
-
+        cy.get('input[type=password]').type('cypressdevoxx{enter}')
         cy.url().should('contain', '/')
-        cy.get('.feed-toggle .nav .nav-link')
-            .should(($links) => {
-                expect($links).to.have.length(2)
-                expect($links.first()).to.contain('Your Feed')
-                expect($links.last()).to.contain('Global Feed')
-            })
-
-        cy.get('.feed-toggle .nav .nav-link').last().as('GlobalFeed')
-
-        cy.log('Visit author page')
-        cy.visit('/')
-        cy.get('@GlobalFeed').click()
-        cy.get('.author').first().click()
-        cy.url().should('contain', '@')
-        cy.get('.user-info').should('exist')
-
-        cy.log('Visit article page')
-        cy.visit('/')
-        cy.get('@GlobalFeed').click()
-        cy.get('.preview-link > h1').eq(2).click()
-        cy.url().should('contain', 'article')
+        cy.contains('cypressdevoxx').should('exist')
     })
 })
