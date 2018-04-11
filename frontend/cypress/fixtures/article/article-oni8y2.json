@@ -1,0 +1,21 @@
+{
+  "article": {
+    "title": "Article2",
+    "slug": "article2-oni8y2",
+    "body": "- Hi",
+    "createdAt": "2018-04-11T14:21:37.840Z",
+    "updatedAt": "2018-04-11T14:22:05.891Z",
+    "tagList": [
+      "tag1"
+    ],
+    "description": "stuff",
+    "author": {
+      "username": "sz",
+      "bio": null,
+      "image": "",
+      "following": false
+    },
+    "favorited": false,
+    "favoritesCount": 2
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "comments": [
+    {
+      "id": 123,
+      "createdAt": "2018-04-11T15:01:02.780Z",
+      "updatedAt": "2018-04-11T15:01:02.780Z",
+      "body": "First comment",
+      "author": {
+        "username": "author1",
+        "bio": null,
+        "image": "https://static.productionready.io/images/smiley-cyrus.jpg",
+        "following": false
+      }
+    },
+    {
+      "id": 456,
+      "createdAt": "2018-04-11T15:01:02.780Z",
+      "updatedAt": "2018-04-11T15:01:02.780Z",
+      "body": "Second comment",
+      "author": {
+        "username": "author2",
+        "bio": null,
+        "image": "https://static.productionready.io/images/smiley-cyrus.jpg",
+        "following": false
+      }
+    }
+  ]
+}
