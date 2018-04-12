@@ -44,7 +44,7 @@ describe('Article page', function () {
             cy.route('/sockjs-node/**', {})
 
             cy.visit('/article/article2-oni8y2')
-            cy.get('h1', {timeout:6000}).should('contain', 'Article2')
+            cy.get('h1', {timeout: 6000}).should('contain', 'Article2')
             cy.get('.author').should('contain', 'sz')
             cy.get('.date').should('contain', 'Wed Apr 11 2018')
             cy.get('.article-content').should('contain', 'Hi')
@@ -54,20 +54,16 @@ describe('Article page', function () {
 
     context('In an authenticated context', function () {
         beforeEach(function () {
-            cy.visit('/login')
-            cy.get('input[type=email]').type('cypress@devoxx.fr')
-            cy.get('input[type=password]').type('cypressdevoxx{enter}')
-            cy.url().should('contain', '/')
-            cy.contains('cypressdevoxx').should('exist')
-        })
+            cy.login('cypress@devoxx.fr', 'cypressdevoxx')
 
-        it.only('should display the article page', function () {
             cy.server()
             cy.route('/api/articles/article2-oni8y2', 'fixture:/article/article-oni8y2.json').as('getArticle')
             cy.route('/api/articles/article2-oni8y2/comments', 'fixture:/comments/comments-oni8y2.json').as('getArticleComments')
             cy.route('/sockjs-node/**', {})
-
             cy.visit('/article/article2-oni8y2')
+        })
+
+        it('should display the article page', function () {
             cy.get('h1').should('contain', 'Article2')
             cy.get('.author').should('contain', 'sz')
             cy.get('.date').should('contain', 'Wed Apr 11 2018')
@@ -77,6 +73,20 @@ describe('Article page', function () {
             cy.get('.card').should('have.length', 3)
             cy.get('.card').eq(1).should('contain', 'First comment')
             cy.get('.card').eq(2).should('contain', 'Second comment')
+        })
+
+        it('should allow user to post a comment', function () {
+            cy.get('textarea').type('My awesome comment')
+            cy.get('button[type=submit]').click()
+            cy.get('textarea').should('be.empty')
+            cy.contains('My awesome comment').should('exist')
+        })
+
+        it('should allow user to delete his comment', function () {
+            cy.route('/api/articles/article2-oni8y2/comments', 'fixture:/comments/comments-oni8y2-for-delete.json').as('getArticleComments')
+            cy.contains('TO DELETE').should('exist')
+            cy.get('.ion-trash-a').click()
+            cy.contains('TO DELETE').should('not.exist')
         })
     })
 
