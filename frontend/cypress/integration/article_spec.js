@@ -96,7 +96,7 @@ describe('Article page', function () {
             cy.route('/sockjs-node/**', {})
 
             cy.wait(['@getArticle', '@getArticleComments'])
-            cy.matchScreenshot('article display', {threshold: 0.001})
+            cy.matchScreenshot('article display', {threshold: 0.003})
         })
     })
 
