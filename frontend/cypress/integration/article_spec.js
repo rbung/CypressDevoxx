@@ -88,6 +88,16 @@ describe('Article page', function () {
             cy.get('.ion-trash-a').click()
             cy.contains('TO DELETE').should('not.exist')
         })
+
+        it('should not have visual regression', function () {
+            cy.server()
+            cy.route('/api/articles/article2-oni8y2', 'fixture:/article/article-oni8y2.json').as('getArticle')
+            cy.route('/api/articles/article2-oni8y2/comments', 'fixture:/comments/comments-oni8y2.json').as('getArticleComments')
+            cy.route('/sockjs-node/**', {})
+
+            cy.wait(['@getArticle', '@getArticleComments'])
+            cy.matchScreenshot('article display', {threshold: 0.001})
+        })
     })
 
 })
