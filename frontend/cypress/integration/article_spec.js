@@ -1,5 +1,5 @@
 describe('Article page', function () {
-    context('In a anonymous context', function () {
+    context('In an anonymous context', function () {
         it('should display the article page', function () {
             cy.server()
             cy.route('/api/articles/article2-oni8y2', 'fixture:/article/article-oni8y2.json').as('getArticle')
