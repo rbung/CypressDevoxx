@@ -1,7 +1,3 @@
-import { register } from 'cypress-match-screenshot'
-
-register()
-
 Cypress.Commands.add("login", (email, password) => {
     cy.request({
             log: false,

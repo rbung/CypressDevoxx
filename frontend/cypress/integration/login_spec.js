@@ -1,9 +1,7 @@
 describe('Login page', function () {
-    beforeEach(function () {
-        cy.visit('/login')
-    })
 
     it('should display nicely', function () {
+        cy.visit('/login')
         cy.contains('Sign In').should('exist')
         cy.get('input[type=email]').should('exist')
         cy.get('input[type=password]').should('exist')
@@ -11,35 +9,35 @@ describe('Login page', function () {
     })
 
     it('should display error message when empty email and password are submitted', function () {
+        cy.visit('/login')
         cy.get('button[type=submit]').click()
-        shouldDisplayError()
+        cy.contains('email or password is invalid').should('exist')
     })
 
     it('should display error message when password is empty', function () {
+        cy.visit('/login')
         cy.get('input[type=email]').type('test@test.com{enter}')
-        shouldDisplayError()
+        cy.contains('email or password is invalid').should('exist')
     })
 
     it('should display error message when email is empty', function () {
+        cy.visit('/login')
         cy.get('input[type=password]').type('password{enter}')
-        shouldDisplayError()
+        cy.contains('email or password is invalid').should('exist')
     })
 
     it('should display error message when login failed', function () {
+        cy.visit('/login')
         cy.get('input[type=email]').type('cypress@devoxx.fr')
         cy.get('input[type=password]').type('wrong{enter}')
-        shouldDisplayError()
+        cy.contains('email or password is invalid').should('exist')
     })
 
     it('should redirect to homepage when logging is successful', function () {
+        cy.visit('/login')
         cy.get('input[type=email]').type('cypress@devoxx.fr')
         cy.get('input[type=password]').type('cypressdevoxx{enter}')
         cy.url().should('contain', '/')
-        cy.contains('cypressdevoxx').should('exist')
     })
-
-    function shouldDisplayError() {
-        cy.contains('email or password is invalid').should('exist')
-    }
 
 })
